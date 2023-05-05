@@ -1,0 +1,23 @@
+﻿@model List<UserViewModel>
+@{
+    ViewData["Title"] = "UserList";
+    int count = 0;
+}
+<table class="table table-stripled">
+    <tr>
+        <th>#</th>
+        <th>Kullanıcı Adı</th>
+        <th>E Posta Adresi</th>
+    </tr>
+    @foreach(var item in Model)
+        {
+            count++;
+            <tr>
+                <td>@count</td>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+            </tr>
+    }
+</table>
+
+
