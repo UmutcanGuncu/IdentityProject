@@ -10,7 +10,17 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
     }) ; //database ayarlaması
-builder.Services.AddIdentityWithExt();
+builder.Services.AddIdentityWithExt();//identity configrasyonunu extensions klasöründe bulabilirsin
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    var cookieBuilder = new CookieBuilder();
+
+    cookieBuilder.Name = "IdentityCookie";
+    opt.LoginPath = "/Login/SignIn";
+    opt.Cookie = cookieBuilder;
+    opt.ExpireTimeSpan = TimeSpan.FromDays(5); //5 gün boyunca giriş yapmazsan login sayfasına yönlendşrşr
+    opt.SlidingExpiration = true; // her giriş yaptığında cookie'nin süresi 5 gün olacak
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -31,6 +31,8 @@
     <None Remove="Areas\Admin\Models\" />
     <None Remove="Areas\Admin\Controllers\" />
     <None Remove="Extensions\" />
+    <None Remove="CustomValidator\" />
+    <None Remove="Localizations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Login\" />
@@ -40,5 +42,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Extensions\" />
+    <Folder Include="CustomValidator\" />
+    <Folder Include="Localizations\" />
   </ItemGroup>
 </Project>

@@ -12,8 +12,10 @@ namespace IdentityNew.ViewModel
         [Required(ErrorMessage = "Lütfen Telefon Numaranızı Giriniz")]
         public string? Phone { get; set; }
         [Required(ErrorMessage = "Lütfen Şifrenizi Giriniz")]
+        [MinLength(6, ErrorMessage = "Şifreniz Minimum 6 Karakter Olmalıdır")]
         public string? Password { get; set; }
         [Required(ErrorMessage = "Lütfen Şifrenizi Tekrar Giriniz")]
+        [MinLength(6, ErrorMessage = "Şifreniz Minimum 6 Karakter Olmalıdır")]
         [Compare("Password",ErrorMessage ="Şifreler Birbiri İle Uyuşmuyor")]
         public string? ConfirmPassword { get; set; }
 	}
