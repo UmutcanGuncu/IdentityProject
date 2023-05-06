@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityNew.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityNew.Controllers
 {
+    [Authorize] // üyelerin erişebilmesini sağlar
     public class MemberController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;
@@ -19,10 +21,15 @@ namespace IdentityNew.Controllers
             _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> Logout()
+        public async  Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("SignIn", "Login");
+            
+        }
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }

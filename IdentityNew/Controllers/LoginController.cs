@@ -7,20 +7,21 @@ using IdentityNew.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using IdentityNew.Extensions;
-
+using IdentityNew.Services;
 
 namespace IdentityNew.Controllers
 {
     public class LoginController : Controller
     {
-        public UserManager<AppUser> _userManager;
-        public SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IEmailService _emailService;
 
-        
-
-        public LoginController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public LoginController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,IEmailService emailService)
         { 
+        
             _userManager = userManager;
+            _emailService = emailService;
             _signInManager = signInManager;
         }
 
@@ -85,7 +86,59 @@ namespace IdentityNew.Controllers
             ModelState.AddModelErrorList(new List<string> { "E Mail Veya Şifre Yanlış" });
             return View();
         }
+        [HttpGet]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel model)
+        {
+            var hasUser = await _userManager.FindByEmailAsync(model.Email);
+            if(hasUser==null)
+            {
+                ModelState.AddModelErrorList(new List<string> { "Bu E Posta Adresine Sahip Kullanıcı Bulunamamıştır" });
+                return View();
+            }
+            string passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(hasUser);
 
+            
+            var passwordResetLink = Url.Action("ResetPassword", "Login", new { userId = hasUser.Id, Token = passwordResetToken },HttpContext.Request.Scheme);
+            await _emailService.SendResetPasswordEmail(passwordResetLink, hasUser.Email);
+            TempData["Success"] = "Şifreniz E Posta Adresinize Gönderilmiştir";
+            return RedirectToAction("ForgetPassword","Login");
+        }
+        [HttpGet]
+        public IActionResult ResetPassword(string userId,string Token)
+        {
+            TempData["userId"] = userId;
+            TempData["Token"] = Token;
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            var userId = model.UserId;
+            var Token = model.Token;
+            if(userId==null || Token== null)
+            {
+                throw new Exception("Bir Hata Meydana Geldi");
+            }
+            var hasUser = await _userManager.FindByIdAsync(userId);
+            if(hasUser==null)
+            {
+                ModelState.AddModelErrorList(new List<string> { "Kullanıcı Bulunamadı" });
+                return View();
+            }
+            var result = await _userManager.ResetPasswordAsync(hasUser, Token, model.Password);
+            if(result.Succeeded)
+            {
+                return RedirectToAction("SignIn", "Login");
+            }
+            ModelState.AddModelErrorList(result.Errors.Select(x => x.Description).ToList());
+            
+            return View();
+        }
     }
 }
 

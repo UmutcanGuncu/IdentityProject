@@ -16,7 +16,10 @@ namespace IdentityNew.Extensions
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // 4 başarısız girişte 5 dakika boyunca giriş yapamayacak kullanıcı
                 options.Lockout.MaxFailedAccessAttempts = 4; //Başarısız giriş sayısı
             }
-    ).AddPasswordValidator<PasswordValidator>().AddErrorDescriber<LocalizationIdentityErrorDescriber>().AddEntityFrameworkStores<AppDbContext>(); //ıdentity ayarlaması
+    ).AddPasswordValidator<PasswordValidator>()
+    .AddErrorDescriber<LocalizationIdentityErrorDescriber>()
+    .AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<AppDbContext>();//ıdentity ayarlaması
 
         }
        

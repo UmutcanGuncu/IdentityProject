@@ -33,6 +33,9 @@
     <None Remove="Extensions\" />
     <None Remove="CustomValidator\" />
     <None Remove="Localizations\" />
+    <None Remove="Views\Member\" />
+    <None Remove="Services\" />
+    <None Remove="OptionsModel\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Login\" />
@@ -44,5 +47,8 @@
     <Folder Include="Extensions\" />
     <Folder Include="CustomValidator\" />
     <Folder Include="Localizations\" />
+    <Folder Include="Views\Member\" />
+    <Folder Include="Services\" />
+    <Folder Include="OptionsModel\" />
   </ItemGroup>
 </Project>
