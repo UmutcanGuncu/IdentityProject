@@ -1,0 +1,68 @@
+﻿@model UserEditViewModel
+@{
+    ViewData["Title"] = "Bilgileri Güncelle";
+}
+
+
+@section Scripts{
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div asp-validation-summary="ModelOnly" class="alert alert-info" role="alert">
+
+            </div>
+
+
+
+        </div>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-info" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        <h3>Kullanıcı Bilgi Güncelleme Sayfası</h3>
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Kullanıcı Adı</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" asp-for="UserName">
+                <span asp-validation-for="UserName" style="color:red;"></span>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">E Posta Adresi</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" asp-for="Email">
+                <span asp-validation-for="Email" style="color:red;"></span>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Telefon Numarası</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" asp-for="Phone">
+                <span asp-validation-for="Phone" style="color:red;"></span>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Doğum Tarihi</label>
+                <input class="form-control" id="exampleFormControlInput1" asp-for="BirthDay">
+                <span asp-validation-for="BirthDay" style="color:red;"></span>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Şehir</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" asp-for="City">
+                <span asp-validation-for="City" style="color:red;"></span>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Cinsiyet</label>
+                <select class="form-control" asp-for="Gender" asp-items="ViewBag.GenderList">
+                </select>
+                <span asp-validation-for="Gender" style="color:red;"></span>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Profil Resmi</label>
+                <input type="file" class="form-control" id="exampleFormControlInput1" asp-for="Picture">
+                <span asp-validation-for="Picture" style="color:red;"></span>
+            </div>
+            <button class="btn btn-outline-primary">Bilgileri Güncelle</button>
+        </form>
+    </div>
+</div>

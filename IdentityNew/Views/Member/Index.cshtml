@@ -1,1 +1,20 @@
-﻿<h1>Hoşgeldin @User.Identity!.Name</h1>
+﻿@model UserViewModel
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+    <user-picture-thumbnail class="rounded" style="width:300px;" picture-url="@Model.PictureUrl" ></user-picture-thumbnail>
+
+    </div>
+</div>
+<h1>Hoşgeldin @User.Identity!.Name</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>Kullanıcı Adı</th>
+        <th>E Posta Adresi</th>
+        <th>Telefon Numarası</th>
+    </tr>
+   <tr>
+       <td>@Model.UserName</td>
+       <td>@Model.Email</td>
+       <td>@Model.PhoneNumber</td>
+   </tr>
+</table>

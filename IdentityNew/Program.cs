@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using IdentityNew.OptionsModel;
 using Microsoft.Extensions.DependencyInjection;
 using IdentityNew.Services;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +15,10 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-    }) ; //database ayarlaması
+    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+}) ; //database ayarlaması
 builder.Services.AddIdentityWithExt();//identity configrasyonunu extensions klasöründe bulabilirsin
+builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSetting"));
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>

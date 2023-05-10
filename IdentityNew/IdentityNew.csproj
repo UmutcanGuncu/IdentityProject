@@ -36,6 +36,7 @@
     <None Remove="Views\Member\" />
     <None Remove="Services\" />
     <None Remove="OptionsModel\" />
+    <None Remove="TagHelpers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Login\" />
@@ -50,5 +51,10 @@
     <Folder Include="Views\Member\" />
     <Folder Include="Services\" />
     <Folder Include="OptionsModel\" />
+    <Folder Include="wwwroot\userPictures\" />
+    <Folder Include="TagHelpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\userPictures\" />
   </ItemGroup>
 </Project>
